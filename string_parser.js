@@ -1,16 +1,16 @@
 const fs = require('fs')
-let data = fs.readFileSync('simpy.txt')
+let input = fs.readFileSync('simpy.txt')
 // console.log(data)
-data = data.toString()
-const stringParser = function( data ){
+input = input.toString()
+const stringParser = function( input ){
     let i = 1, captured = '', extra = 0;
-    if( data[0] === '"'){
+    if( input.startsWith('"')){
      
-        while( i < data.length ){
-      if( data[i] === '"' && data[i-1] != '\\')  return [captured, data.slice(captured.length + extra+2)];
-      if( data[i] != '\\' ) captured = captured.concat(data[i]);
-      else if( data[i] === '\\' ){
-        switch (data[i+1]){
+        while( i < input.length ){
+      if( input[i] === '"' && input[i-1] != '\\')  return [captured, input.slice(captured.length + extra+2)];
+      if( input[i] != '\\' ) captured = captured.concat(input[i]);
+      else if( input[i] === '\\' ){
+        switch (input[i+1]){
           case '\\' : captured += '\\'; extra++; break;
           case '"' : captured+= '\"'; extra++; break;
           case '/' : captured += '\/'; extra++; break;
@@ -19,7 +19,7 @@ const stringParser = function( data ){
           case 'n' : captured += '\n'; extra++; break;
           case 'r' : captured += '\r'; extra++; break;
           case 't' : captured += '\t'; extra++; break;       
-          case 'u': abc = parseInt(data.slice(i+2,i+6),16); 
+          case 'u': abc = parseInt(input.slice(i+2,i+6),16); 
           // console.log(abc)
                     captured +="\/u"+  abc.toString(16);extra +=5;i+=4;break;                  
           default : return null;
@@ -30,13 +30,13 @@ const stringParser = function( data ){
       i++;
     }
       if( captured[captured.length-1] != '"' )  return null;
-      return [captured, data.slice(captured.length + extra+2)];
+      return [captured, input.slice(captured.length + extra+2)];
     }
     else return null;
   }
 
 
-console.log(stringParser(data))
+console.log(stringParser(input))
 
 
 
