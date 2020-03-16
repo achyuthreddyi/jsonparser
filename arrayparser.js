@@ -1,19 +1,51 @@
+const fs = require('fs')
+let input = fs.readFileSync('simpy.txt')
+// console.log(data)
+input = input.toString()
+
+
 const arrayparser = function(input){
-    let finalresilt = []
-    let 
-    input = input.trim()
-    if (input.startsWith('[')){
-        input = input.slice(1).trim()
+    let finalresult = []
+    // input = input.trim()
+    if(input.startsWith('[')){
+        input = input.slice(1)
+        console.log(input)
+        input = input.slice(1)
+        console.log(input)
+        while(input[0] != ']'){
+            // input.trim()
+            let a= valueparser(input)
+            if (a === null ) return null 
+            finalresult.push(a[0])
+            input = a[1]
+            if (input[0] === ','){
+                input = input.slice(1)
+                
+
+            }
+            if (input.startsWith(']')) return null
+
+        }
+        return [finalresult,input.slice(1)]
 
     }
-    while(input[0] !== ']'){
-        input = input.trim()
-        if (valueparser(input) === null) return null
-        else finalresilt.push(valueparser(input))
-
-    }
+    return null 
+    
 
 }
+
+
+
+
+
+
+
+  // input.slice(a[0].length)
+        // console.log(finalresult)
+        // console.log(a)
+        // let a= finalresult.push(valueparser(input)[0])
+        // console.log(valueparser(finalresult))
+        // console.log(finalresult)
 
 let nullparser = input =>input.startsWith('null')? [null,input.slice(4)] :null
 function numberParse (input) {
@@ -42,6 +74,7 @@ function numberParse (input) {
       if( input[i] != '\\' ) captured = captured.concat(input[i]);
       else if( input[i] === '\\' ){
         switch (input[i+1]){
+            // update this using short circuiting
           case '\\' : captured += '\\'; extra++; break;
           case '"' : captured+= '\"'; extra++; break;
           case '/' : captured += '\/'; extra++; break;
@@ -66,13 +99,14 @@ function numberParse (input) {
     else return null;
   }
 
-  let boolparser = input =>input.startsWith('true') ?[true,input.slice(4)]:(input.startsWith('false')?[false,input.slice(5)]:null)
+let boolparser = input =>input.startsWith('true') ?[true,input.slice(4)]:(input.startsWith('false')?[false,input.slice(5)]:null)
 
 
 
 
 let valueparser  =  function(input){
     let valueresult ;
+    //  update this using short circuiting
     valueresult = nullparser(input)
     if (valueresult !=null) return valueresult
     valueresult = boolparser(input)
@@ -82,7 +116,8 @@ let valueparser  =  function(input){
     valueresult = stringParser(input)
     if (valueresult !=null) return valueresult
     valueresult = arrayparser(input)
-    if (valueresult !=null) return valueresult  
-
-
+    if (valueresult !=null) return valueresult 
 }
+
+// console.log(valueparser(input))
+console.log(valueparser(input))
