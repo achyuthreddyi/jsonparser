@@ -11,6 +11,8 @@ const stringParser = function( input ){
       if( input[i] != '\\' ) captured = captured.concat(input[i]);
       else if( input[i] === '\\' ){
         switch (input[i+1]){
+
+          // simplify it using shortcircuiting
           case '\\' : captured += '\\'; extra++; break;
           case '"' : captured+= '\"'; extra++; break;
           case '/' : captured += '\/'; extra++; break;
