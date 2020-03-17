@@ -3,11 +3,13 @@ let input = fs.readFileSync('simpy.txt')
 // console.log(data)
 input = input.toString()
 
+// nothing but
 
 const arrayparser = function(input){
     let finalresult = []
     // input = input.trim()
     if(input.startsWith('[')){
+        console.log(typeof(input))
         input = input.slice(1)
         console.log(input)
         input = input.slice(1)
