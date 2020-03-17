@@ -3,7 +3,8 @@ let input = fs.readFileSync('simpy.txt')
 // console.log(data)
 input = input.toString()
 
-// nothing but
+// nothing but to check the ssh key
+
 
 const arrayparser = function(input){
     let finalresult = []
