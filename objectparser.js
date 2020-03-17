@@ -1,29 +1,30 @@
 const fs = require('fs')
-let input = fs.readFile('simpy.txt')
-// console.log(data)
+let input = fs.readFileSync('simpy.txt')
 input = input.toString()
-console.log(input)
-const arrayparser = function(input){
+let objectparser = function(input){
+  
+}
+
+let arrayparser = function(input){
     let finalresult = []
-    input = input.trim()
+    // input = input.trim()
     if(input.startsWith('[')){
         // console.log(typeof(input))
         input = input.slice(1)
-        // console.log(input)
-        input = input.slice(1)
-        // console.log(input)
+        input = input.trim()
         while(input[0] != ']'){
-            // input.trim()
+            input.trim()
             let a= valueparser(input)
             if (a === null ) return null 
             finalresult.push(a[0])
-            input = a[1]
+            input = a[1].trim()
             if (input[0] === ','){
                 input = input.slice(1)
-                
+                input.trim()
+                if (input.startsWith(']')) return null              
 
             }
-            if (input.startsWith(']')) return null
+           
 
         }
         return [finalresult,input.slice(1)]
@@ -33,10 +34,6 @@ const arrayparser = function(input){
     
 
 }
-
-
-
-
 let nullparser = input =>input.startsWith('null')? [null,input.slice(4)] :null
 function numberParse (input) {
     const regex = /(^[-]?[1-9]\d*([.]\d+)?([eE][+-]?\d+)?)|(^[-]?0([.]\d+)([eE][+-]?\d+)?)|(^[-]?0[eE][+-]?\d+)|(^[-]?0)/
@@ -106,7 +103,10 @@ let valueparser  =  function(input){
     valueresult = stringParser(input)
     if (valueresult !=null) return valueresult
     valueresult = arrayparser(input)
-    if (valueresult !=null) return valueresult 
+    if (valueresult !=null) return valueresult  
+    // valueresult = objectparser(input)
+    // if (valueresult !=null) return valueresult
+    else return null
 }
 
 // console.log(valueparser(input))

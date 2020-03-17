@@ -34,7 +34,7 @@ const stringParser = function( input ){
       if( captured[captured.length-1] != '"' )  return null;
       return [captured, input.slice(captured.length + extra+2)];
     }
-    else return null;
+    else return null; 
   }
 
 
