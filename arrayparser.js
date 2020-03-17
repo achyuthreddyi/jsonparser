@@ -3,34 +3,34 @@ let input = fs.readFile('simpy.txt')
 // console.log(data)
 input = input.toString()
 console.log(input)
-const arrayparser = function(input){
-    let finalresult = []
-    input = input.trim()
-    if(input.startsWith('[')){
-        // console.log(typeof(input))
-        input = input.slice(1)
-        // console.log(input)
-        input = input.slice(1)
-        // console.log(input)
-        while(input[0] != ']'){
-            // input.trim()
-            let a= valueparser(input)
-            if (a === null ) return null 
-            finalresult.push(a[0])
-            input = a[1]
-            if (input[0] === ','){
-                input = input.slice(1)
-                
 
-            }
-            if (input.startsWith(']')) return null
+let arrayparser = function(input){
+  let finalresult = []
+  // input = input.trim()
+  if(input.startsWith('[')){
+      // console.log(typeof(input))
+      input = input.slice(1)
+      input = input.trim()
+      while(input[0] != ']'){
+          input.trim()
+          let a= valueparser(input)
+          if (a === null ) return null 
+          finalresult.push(a[0])
+          input = a[1].trim()
+          if (input[0] === ','){
+              input = input.slice(1)
+              input.trim()
+              if (input.startsWith(']')) return null              
 
-        }
-        return [finalresult,input.slice(1)]
+          }
+         
 
-    }
-    return null 
-    
+      }
+      return [finalresult,input.slice(1)]
+
+  }
+  return null 
+  
 
 }
 
