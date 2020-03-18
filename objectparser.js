@@ -1,10 +1,51 @@
 const fs = require('fs')
 let input = fs.readFileSync('simpy.txt')
 input = input.toString()
-let objectparser = function(input){
-  
-}
 
+
+
+
+let objectparser = function(input){
+
+  let result ={},key=[],value=[]
+  while(input !=''){
+
+    if(input.startsWith('{'))
+    {
+      // console.log(input)
+      // input = input.trim()
+      // console.log(input)
+      input = input.slice(1).trim()
+      // console.log(1)
+      key = stringParser(input)
+      // console.log('key',key)
+      if(key === null || key[1][0] !=':') return null
+      if (key === '}') return [result,input.slice(1)]
+      // console.log('value',key[1].slice(1))
+      value = valueparser(key[1].slice(1).trim())
+      result[key[0]] = value[0]
+      // console.log(result) 
+      input = value[1]
+      // console.log('input',input)
+
+    }
+    if (input.startsWith(',')){
+    
+      input = input.slice(1).trim()
+      if (input[1] ==='}' || input[1] === ',') return null
+      key = stringParser(input)
+      if(key === null || key[1][0] !=':') return null
+      if (key === '}') return [result,input.slice(1)]
+      value = valueparser(key[1].slice(1).trim())
+      result[key[0]] = value[0]
+      input = value[1]
+
+    }
+    if(input.startsWith('}')) return [result,input.slice(1)]
+
+  }
+  return [result]
+}
 let arrayparser = function(input){
     let finalresult = []
     // input = input.trim()
@@ -96,17 +137,23 @@ let valueparser  =  function(input){
     //  update this using short circuiting
     valueresult = nullparser(input)
     if (valueresult !=null) return valueresult
+
     valueresult = boolparser(input)
     if (valueresult !=null) return valueresult 
+
     valueresult = numberParse(input)
     if (valueresult !=null) return valueresult 
+
     valueresult = stringParser(input)
     if (valueresult !=null) return valueresult
+
     valueresult = arrayparser(input)
     if (valueresult !=null) return valueresult  
-    // valueresult = objectparser(input)
-    // if (valueresult !=null) return valueresult
-    else return null
+
+    valueresult = objectparser(input)
+    if (valueresult !=null) return valueresult
+    // else return 0
+    else valueresult = 0
 }
 
 // console.log(valueparser(input))

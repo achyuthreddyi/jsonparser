@@ -25,7 +25,7 @@ const stringParser = function( input ){
           // console.log(abc)
                     captured +="\/u"+  abc.toString(16);extra +=5;i+=4;break;                  
           default : return null;
-        } 
+        }   
         i++;
       }
       else return null;
