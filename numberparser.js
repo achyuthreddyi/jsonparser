@@ -6,7 +6,7 @@ function numberParse (input) {
     // const regex3 = /^[-]?0$/ // for only zero
     
     const result = input.match(regex)
-    // console.log (result)
+    console.log (result)
       
     if (result === null) return null
     return [(input.slice(0, result[0].length)) * 1,input.slice(result[0].length)]
@@ -14,4 +14,4 @@ function numberParse (input) {
     
   }
     
-console.log(numberParse('00.1'))
+console.log(numberParse('45\n'))

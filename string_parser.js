@@ -2,6 +2,9 @@ const fs = require('fs')
 let input = fs.readFileSync('simpy.txt')
 // console.log(data)
 input = input.toString()
+
+
+
 const stringParser = function( input ){
     let i = 1, captured = '', extra = 0;
     if( input.startsWith('"')){
@@ -23,7 +26,7 @@ const stringParser = function( input ){
           case 't' : captured += '\t'; extra++; break;       
           case 'u': abc = parseInt(input.slice(i+2,i+6),16); 
           // console.log(abc)
-                    captured +="\/u"+  abc.toString(16);extra +=5;i+=4;break;                  
+                    captured +=String.fromCodePoint(abc.toString(16));extra +=5;i+=4;break;                  
           default : return null;
         }   
         i++;

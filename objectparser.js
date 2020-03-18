@@ -8,20 +8,22 @@ input = input.toString()
 let objectparser = function(input){
 
   let result ={},key=[],value=[]
-  while(input !=''){
+  while(input.length>1){
 
     if(input.startsWith('{'))
     {
-      // console.log(input)
+      // console.log(input) 
       // input = input.trim()
       // console.log(input)
       input = input.slice(1).trim()
+      console.log('trimmed',input)
       // console.log(1)
       key = stringParser(input)
       // console.log('key',key)
       if(key === null || key[1][0] !=':') return null
       if (key === '}') return [result,input.slice(1)]
       // console.log('value',key[1].slice(1))
+      console.log('keykey',key[1].slice(1).trim())
       value = valueparser(key[1].slice(1).trim())
       result[key[0]] = value[0]
       // console.log(result) 
@@ -53,12 +55,15 @@ let arrayparser = function(input){
         // console.log(typeof(input))
         input = input.slice(1)
         input = input.trim()
+        console.log('nikki',input)
         while(input[0] != ']'){
             input.trim()
             let a= valueparser(input)
             if (a === null ) return null 
+            console.log(a)
+
             finalresult.push(a[0])
-            input = a[1].trim()
+            input = a[1]
             if (input[0] === ','){
                 input = input.slice(1)
                 input.trim()
@@ -76,20 +81,25 @@ let arrayparser = function(input){
 
 }
 let nullparser = input =>input.startsWith('null')? [null,input.slice(4)] :null
+
+
+
+
 function numberParse (input) {
-    const regex = /(^[-]?[1-9]\d*([.]\d+)?([eE][+-]?\d+)?)|(^[-]?0([.]\d+)([eE][+-]?\d+)?)|(^[-]?0[eE][+-]?\d+)|(^[-]?0)/
-    // const regex1 =/ (^[-]?0([.]\d+)([eE][+-]?\d+)?)/ //number with e 
-    // const regex2 = /(^[-]?0[eE][+-]?\d+)])/ // 
-    // const regex3 = /^[-]?0$/ // for only zero
+  const regex = /(^[-]?[1-9]\d*([.]\d+)?([eE][+-]?\d+)?)|(^[-]?0([.]\d+)([eE][+-]?\d+)?)|(^[-]?0[eE][+-]?\d+)|(^[-]?0)/
+  // const regex1 =/ (^[-]?0([.]\d+)([eE][+-]?\d+)?)/ //number with e 
+  // const regex2 = /(^[-]?0[eE][+-]?\d+)])/ // 
+  // const regex3 = /^[-]?0$/ // for only zero
+
+  
+  const result = input.match(regex)
+  console.log ('printing result',result)
     
-    const result = input.match(regex)
-    // console.log (result)
-      
-    if (result === null) return null
-    return [(input.slice(0, result[0].length)) * 1,input.slice(result[0].length)]
-      
+  if (result === null) return null
+  else return [(input.slice(0, result[0].length)) * 1,input.slice(result[0].length)]
     
-  }
+  
+}
 
 
 
@@ -113,12 +123,12 @@ function numberParse (input) {
           case 't' : captured += '\t'; extra++; break;       
           case 'u': abc = parseInt(input.slice(i+2,i+6),16); 
           // console.log(abc)
-                    captured +="\/u"+  abc.toString(16);extra +=5;i+=4;break;                  
+          captured +=String.fromCodePoint(abc);extra +=5;i+=4;break;                  
           default : return null;
         } 
         i++;
       }
-      else return null;
+      else return null; 
       i++;
     }
       if( captured[captured.length-1] != '"' )  return null;
@@ -153,7 +163,7 @@ let valueparser  =  function(input){
     valueresult = objectparser(input)
     if (valueresult !=null) return valueresult
     // else return 0
-    else valueresult = 0
+    else valueresult = 0 ;console.log()
 }
 
 // console.log(valueparser(input))
